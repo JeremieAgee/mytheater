@@ -1,10 +1,7 @@
-"use client";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Movie } from "../utils/theater";
 export default function MovieComponent({
 	title,
-	director,
-	producer,
 	screenTime,
 	updateMovie,
 	removeMovie,
@@ -12,12 +9,17 @@ export default function MovieComponent({
 	const [formActive, setFormActive] = useState(false);
 	const [updatedMovie, setUpdatedMovie] = useState({
 		title,
-		director,
-		producer,
 		screenTime,
 		updateMovie,
 		removeMovie,
 	});
+	function handleUpdateMovie() {
+		const newMovie = new Movie(updatedMovie.title, updatedMovie.screenTime);
+		console.log(newMovie);
+		setUpdatedMovie(newMovie);
+		updateMovie(newMovie);
+		setFormActive(false);
+	}
 	return formActive ? (
 		<tr className="py-5 mx-5">
 			<td>
@@ -27,24 +29,7 @@ export default function MovieComponent({
 					onChange={(e) =>
 						setUpdatedMovie({ ...updatedMovie, title: e.target.value })
 					}
-				/>
-			</td>
-			<td>
-				<input
-					type="text"
-					value={updatedMovie.director}
-					onChange={(e) =>
-						setUpdatedMovie({ ...updatedMovie, director: e.target.value })
-					}
-				/>
-			</td>
-			<td>
-				<input
-					type="text"
-					value={updatedMovie.producer}
-					onChange={(e) =>
-						setUpdatedMovie({ ...updatedMovie, producer: e.target.value })
-					}
+					required
 				/>
 			</td>
 			<td>
@@ -54,32 +39,29 @@ export default function MovieComponent({
 					onChange={(e) =>
 						setUpdatedMovie({ ...updatedMovie, screenTime: e.target.value })
 					}
+					required
 				/>
 			</td>
 			<td>
-				<button
-					onClick={() => {
-						setFormActive(false);
-					}}
-				>
-					Submit
-				</button>
+				<button onClick={handleUpdateMovie}>Submit</button>
 			</td>
 		</tr>
 	) : (
 		<tr className="py-5 mx-5">
-			<td>{updatedMovie.title}</td>
-			<td>{updatedMovie.director}</td>
-			<td>{updatedMovie.producer}</td>
-			<td>{updatedMovie.screenTime}</td>
+			<td>{title}</td>
+			<td>{screenTime}</td>
 			<td>
 				<button
-					onClick={() => {
-						setFormActive(true);
-					}}
+					onClick={() => setFormActive(true)}
 					className="border-2 border-cyan-600 mx-5"
 				>
 					Edit
+				</button>
+				<button
+					onClick={() => removeMovie(title)}
+					className="border-2 border-cyan-600 mx-5"
+				>
+					Delete
 				</button>
 			</td>
 		</tr>
