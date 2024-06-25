@@ -20,7 +20,7 @@ This is a Next.js application named Theater Manager. It includes a simple home p
 
 ## Deployment
 
-This application is deployed on Vercel. You can view the live site at: []
+This application is deployed on Vercel. You can view the live site at: [mytheater.vercel.app]
 
 - Technologies Used
 
