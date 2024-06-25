@@ -1,22 +1,12 @@
 # Theater Manager
 
-
-
 ## Author: Jeremie Agee
 
-
-
-## Description 
-
- 
+## Description
 
 This is a Next.js application named Theater Manager. It includes a simple home page with navigation links styled using Tailwind CSS.
 
-
-
 ## How to Run
-
-
 
 1. Clone the repository: git clone []
 
@@ -28,15 +18,9 @@ This is a Next.js application named Theater Manager. It includes a simple home p
 
 5. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to see the app in action.
 
-
-
 ## Deployment
 
-
-
 This application is deployed on Vercel. You can view the live site at: []
-
-
 
 - Technologies Used
 

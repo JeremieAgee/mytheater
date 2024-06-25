@@ -3,30 +3,48 @@ import React, { useState, useEffect } from "react";
 import { Screen, Theater } from "../../utils/theater";
 import ScreenComponent from "../../components/ScreenComponent";
 //
-import { db, getCollection, addToCollection, removeFromCollection, updateCollectionItem } from "../../../firebase.config";
+import {
+	db,
+	getCollection,
+	addToCollection,
+	removeFromCollection,
+	updateCollectionItem,
+} from "../../../firebase.config";
+
 export default function ManagementPage() {
 	const [theater, setTheater] = useState(
-		new Theater(
-			"Jeremie's Movie Theater",
-			[
-				// new Screen("A1", 75, "How To Train Your Dragon", 98),
-				// new Screen("A2", 25, "New Movie2", 100),
-				// new Screen("A3", 30, "New Movie3", 75),
-				// new Screen("A4", 30, "New Movie4", 65),
-			]
-		)
+		new Theater("Jeremie's Movie Theater", [
+			// new Screen("A1", 75, "How To Train Your Dragon", 98),
+			// new Screen("A2", 25, "New Movie2", 100),
+			// new Screen("A3", 30, "New Movie3", 75),
+			// new Screen("A4", 30, "New Movie4", 65),
+		])
 	);
-		async function fetchData(){
-		const screensCollection = await getCollection(db, "Screens");
-		const newScreens = screensCollection.map((doc)=>{
-			return new Screen(doc.data.name, doc.data.availableSeats, doc.data.showing, doc.data.screenTime, doc.id);
-		})
+	useEffect(() => {
+		async function fetchData() {
+			try {
+				const screensCollection = await getCollection(db, "Screens");
+				const newScreens = screensCollection.map((doc) => {
+					return new Screen(
+						doc.data.name,
+						doc.data.availableSeats,
+						doc.data.showing,
+						doc.data.screenTime,
+						doc.id
+					);
+				});
 
-		setTheater(new Theater(theater.name, newScreens));
-	 }
-	fetchData();
-	
-	
+				setTheater(new Theater(theater.name, newScreens));
+			} catch (error) {
+				console.log("Failed fetching data", error);
+			}
+		}
+		fetchData();
+		return () => {
+			console.log("get all docs cleanup");
+		};
+	}, []);
+
 	function handleAddScreen(e) {
 		e.preventDefault();
 		const name = e.target.name.value;
@@ -37,23 +55,34 @@ export default function ManagementPage() {
 			name,
 			availableSeats,
 			showing,
-			screenTime
+			screenTime,
 		};
-		addToCollection(db, "Screens", screenToAdd);
-		fetchData();	
+		const screenId = addToCollection(db, "Screens", screenToAdd);
+		const newScreen = new Screen(
+			name,
+			availableSeats,
+			showing,
+			screenTime,
+			screenId
+		);
+		const newTheater = new Theater(theater.name, theater.screens);
+		newTheater.addScreen(newScreen);
+		setTheater(newTheater);
+		console.log(`${newScreen} was added`);
 	}
 	function removeScreen(screenId) {
+		const newTheater = new Theater(theater.name, theater.screens);
+		newTheater.removeScreen(screenId);
 		removeFromCollection(db, "Screens", screenId);
-		fetchData();
-		
+		setTheater(newTheater);
 	}
 	function updateScreen(screenToUpdate) {
 		const newScreens = theater.screens.map((screen) => {
-			return screenToUpdate.name === screen.name ? screenToUpdate : screen;
+			return screenToUpdate.id === screen.id ? screenToUpdate : screen;
 		});
 		const newTheater = new Theater(theater.name, newScreens);
 		setTheater(newTheater);
-		updateCollectionItem(db, "Screens", screenToUpdate, screenToUpdate.id)
+		updateCollectionItem(db, "Screens", screenToUpdate, screenToUpdate.id);
 	}
 	return (
 		<main className="">
@@ -65,11 +94,7 @@ export default function ManagementPage() {
 					type="number"
 					name="availableSeats"
 				></input>
-				<input
-					placeholder="Movie Title"
-					type="text"
-					name="showing"
-				></input>
+				<input placeholder="Movie Title" type="text" name="showing"></input>
 				<input
 					placeholder="Screen Time"
 					type="number"
@@ -98,7 +123,7 @@ export default function ManagementPage() {
 								screenTime={screen.screenTime}
 								updateScreen={updateScreen}
 								removeScreen={removeScreen}
-								id ={screen.id}
+								id={screen.id}
 							/>
 						);
 					})}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Screen } from "../utils/theater";
+
 export default function ScreenComponent({
 	name,
 	availableSeats,
@@ -7,16 +7,9 @@ export default function ScreenComponent({
 	screenTime,
 	updateScreen,
 	removeScreen,
-	id
+	id,
 }) {
 	const [isEditing, setIsEditing] = useState(false);
-	const [currentScreen, setCurrentScreen] = useState({
-		name,
-		availableSeats,
-		showing,
-		screenTime,
-		id
-	});
 	const [updatedScreen, setUpdatedScreen] = useState({
 		name,
 		availableSeats,
@@ -24,31 +17,21 @@ export default function ScreenComponent({
 		screenTime,
 		updateScreen,
 		removeScreen,
-		id
+		id,
 	});
 	function handleUpdateScreen() {
-		const newScreen = new Screen(
-			updatedScreen.name,
-			updatedScreen.availableSeats,
-			updatedScreen.showing,
-			updatedScreen.screenTime,
-			updatedScreen.updateScreen,
-			updatedScreen.removeScreen,
-			updatedScreen.id,
-		);
-		const name = updateScreen.name;
-		const availableSeats = updateScreen.availableSeats;
-		const showing = updateScreen.showing;
-		const screenTime = updateScreen.screenTime;
+		const name = updatedScreen.name;
+		const availableSeats = updatedScreen.availableSeats;
+		const showing = updatedScreen.showing;
+		const screenTime = updatedScreen.screenTime;
 		const collectionScreen = {
 			name,
 			availableSeats,
 			showing,
 			screenTime,
+			id
 		};
-		setUpdatedScreen(newScreen);
-		updateScreen(newScreen);
-		setCurrentScreen(collectionScreen)
+		updateScreen(collectionScreen);
 		setIsEditing(false);
 	}
 	return isEditing ? (
@@ -112,6 +95,7 @@ export default function ScreenComponent({
 			<td>{availableSeats}</td>
 			<td>{showing}</td>
 			<td>{screenTime}</td>
+			<td>{id}</td>
 			<td>
 				<button onClick={() => setIsEditing(true)}>Edit</button>
 				<button onClick={() => removeScreen(id)}>Delete</button>

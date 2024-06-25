@@ -17,7 +17,7 @@ class Screen {
 		};
 		this.updateLength = (newScreenTime) => {
 			this.screenTime = newScreenTime;
-		}
+		};
 	}
 }
 class Theater {
@@ -34,9 +34,9 @@ class Theater {
 				alert(`${newScreen.name} is already in system`);
 			}
 		};
-		this.removeScreen = function (screenName) {
+		this.removeScreen = function (screenId) {
 			const matchedScreen = this.screens.find((screen) => {
-				screen.name.toLowerCase() == screenName.toLowerCase();
+				screen.id == screenId;
 			});
 			this.screens.splice(matchedScreen, 1);
 		};
