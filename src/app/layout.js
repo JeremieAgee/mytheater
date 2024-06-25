@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<header>
+				<header style={{minHeight: "20vh"}}>
 					<h1 className="text-center py-5 text-3xl">Theater Manager</h1>
 					<nav className="text-center text-red-600">
 						<Link className="px-5" href="/">
@@ -23,9 +23,8 @@ export default function RootLayout({ children }) {
 						</Link>
 					</nav>
 				</header>
-		
 				{children}
-				<footer className="text-center bottom-1">&copy; Jeremie Agee 2024</footer>
+				<footer style={{minHeight: "5vh"}} className="text-center bottom-0">&copy; Jeremie Agee 2024</footer>
 			</body>
 		</html>
 	);

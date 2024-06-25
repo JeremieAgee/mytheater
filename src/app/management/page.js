@@ -85,7 +85,7 @@ export default function ManagementPage() {
 		updateCollectionItem(db, "Screens", screenToUpdate, screenToUpdate.id);
 	}
 	return (
-		<main className="">
+		<main style={{minHeight: "75vh"}} className="">
 			<form onSubmit={handleAddScreen}>
 				<h3>Add Screen</h3>
 				<input placeholder="Name" type="text" name="name"></input>
@@ -109,7 +109,7 @@ export default function ManagementPage() {
 						<th>Seats Available</th>
 						<th>Showing</th>
 						<th>Screen Time</th>
-						<th>ID</th>
+						<th>Id</th>
 						<th>Edit/Remove</th>
 					</tr>
 				</thead>
