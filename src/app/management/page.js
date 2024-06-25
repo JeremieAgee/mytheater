@@ -109,6 +109,7 @@ export default function ManagementPage() {
 						<th>Seats Available</th>
 						<th>Showing</th>
 						<th>Screen Time</th>
+						<th>ID</th>
 						<th>Edit/Remove</th>
 					</tr>
 				</thead>
