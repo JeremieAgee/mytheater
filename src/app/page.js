@@ -40,6 +40,7 @@ export default function Home() {
 				This is my theater manager you can use this to track available seats and
 				show what movies are playing.
 			</p>
+			<div className="flex justify-center">
 			<table className="border border-orange-400 table-auto">
 				<thead>
 					<tr>
@@ -64,6 +65,7 @@ export default function Home() {
 					})}
 				</tbody>
 			</table>
+			</div>
 		</main>
 	);
 }

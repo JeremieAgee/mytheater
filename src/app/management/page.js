@@ -102,6 +102,7 @@ export default function ManagementPage() {
 				></input>
 				<button type="submit">Submit</button>
 			</form>
+			<div className="flex justify-center">
 			<table className="border border-orange-400 table-auto">
 				<thead>
 					<tr>
@@ -130,6 +131,7 @@ export default function ManagementPage() {
 					})}
 				</tbody>
 			</table>
+			</div>
 		</main>
 	);
 }
