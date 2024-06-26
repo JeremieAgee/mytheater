@@ -89,8 +89,12 @@ async function updateCollectionItem(
 ) {
 	try {
 		const docRef = doc(db, collectionName, objectId);
+		if(docRef){
 		updateDoc(docRef, collectionObject);
 		console.log(`${collectionObject}, ${objectId}`);
+		} else{
+			console.log("No document found");
+		}
 	} catch (e) {
 		console.log("Failed to update doc ", e);
 	}

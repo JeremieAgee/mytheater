@@ -8,6 +8,7 @@ export default function ScreenComponent({
 	updateScreen,
 	removeScreen,
 	id,
+	isManagement
 }) {
 	const [isEditing, setIsEditing] = useState(false);
 	const [updatedScreen, setUpdatedScreen] = useState({
@@ -33,7 +34,8 @@ export default function ScreenComponent({
 		};
 		updateScreen(collectionScreen);
 		setIsEditing(false);
-	}
+	}	
+	
 	return isEditing ? (
 		<tr className="py-5 mx-5">
 			<td>
@@ -95,11 +97,10 @@ export default function ScreenComponent({
 			<td>{availableSeats}</td>
 			<td>{showing}</td>
 			<td>{screenTime}</td>
-			<td>{id}</td>
-			<td>
-				<button onClick={() => setIsEditing(true)}>Edit</button>
-				<button onClick={() => removeScreen(id)}>Delete</button>
-			</td>
+			{isManagement && (<td>
+				<button onClick={() => setIsEditing(true)}>Edit/</button>
+				<button onClick={() => removeScreen(id)}> Delete</button>
+			</td>)}
 		</tr>
 	);
 }

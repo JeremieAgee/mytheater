@@ -85,8 +85,8 @@ export default function ManagementPage() {
 		updateCollectionItem(db, "Screens", screenToUpdate, screenToUpdate.id);
 	}
 	return (
-		<main style={{minHeight: "75vh"}} className="">
-			<form onSubmit={handleAddScreen}>
+		<main style={{minHeight: "75vh"}}>
+			<form onSubmit={handleAddScreen} className="border border-separate border-red-600">
 				<h3>Add Screen</h3>
 				<input placeholder="Name" type="text" name="name"></input>
 				<input
@@ -102,15 +102,14 @@ export default function ManagementPage() {
 				></input>
 				<button type="submit">Submit</button>
 			</form>
-			<table className="">
+			<table className="border border-orange-400 table-auto">
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Seats Available</th>
+						<th>Seats</th>
 						<th>Showing</th>
 						<th>Screen Time</th>
-						<th>Id</th>
-						<th>Edit/Remove</th>
+						<th>Edit/Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -125,6 +124,7 @@ export default function ManagementPage() {
 								updateScreen={updateScreen}
 								removeScreen={removeScreen}
 								id={screen.id}
+								isManagement={true}
 							/>
 						);
 					})}
